@@ -14,6 +14,8 @@
 		021E0ADC1EBD835200CD761B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 021E0ADB1EBD835200CD761B /* Assets.xcassets */; };
 		021E0ADF1EBD835200CD761B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 021E0ADD1EBD835200CD761B /* LaunchScreen.storyboard */; };
 		021E0AE91EBD867700CD761B /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021E0AE81EBD867700CD761B /* Place.swift */; };
+		02A147AE1ECA3E22005B8038 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A147AD1ECA3E22005B8038 /* FirebaseManager.swift */; };
+		02A147B11ECA58E5005B8038 /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A147B01ECA58E5005B8038 /* PlaceCell.swift */; };
 		02BBB86F1EBD891E00CE3904 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 02BBB86E1EBD891E00CE3904 /* GoogleService-Info.plist */; };
 		2F596820067D5C448DCFFFB2 /* Pods_Guidebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CAE819BAEB4B3B79ECC0FBD /* Pods_Guidebook.framework */; };
 /* End PBXBuildFile section */
@@ -28,6 +30,8 @@
 		021E0ADE1EBD835200CD761B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		021E0AE01EBD835200CD761B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		021E0AE81EBD867700CD761B /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		02A147AD1ECA3E22005B8038 /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		02A147B01ECA58E5005B8038 /* PlaceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
 		02BBB86E1EBD891E00CE3904 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1D47897F7A909146261DC594 /* Pods-Guidebook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Guidebook.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Guidebook/Pods-Guidebook.debug.xcconfig"; sourceTree = "<group>"; };
 		5A523933C24B6BE1BEDB78ED /* Pods-Guidebook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Guidebook.release.xcconfig"; path = "Pods/Target Support Files/Pods-Guidebook/Pods-Guidebook.release.xcconfig"; sourceTree = "<group>"; };
@@ -68,8 +72,10 @@
 			isa = PBXGroup;
 			children = (
 				021E0AE71EBD865400CD761B /* Model */,
+				02A147AF1ECA58B4005B8038 /* View */,
 				021E0AE61EBD862500CD761B /* Controller */,
 				021E0AD21EBD835200CD761B /* AppDelegate.swift */,
+				02A147AD1ECA3E22005B8038 /* FirebaseManager.swift */,
 				021E0AD81EBD835200CD761B /* Main.storyboard */,
 				021E0ADB1EBD835200CD761B /* Assets.xcassets */,
 				021E0ADD1EBD835200CD761B /* LaunchScreen.storyboard */,
@@ -94,6 +100,14 @@
 				021E0AE81EBD867700CD761B /* Place.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		02A147AF1ECA58B4005B8038 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				02A147B01ECA58E5005B8038 /* PlaceCell.swift */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		4FFA003ACB89B9A02F18610D /* Frameworks */ = {
@@ -240,8 +254,10 @@
 			files = (
 				021E0AD71EBD835200CD761B /* SecondViewController.swift in Sources */,
 				021E0AD31EBD835200CD761B /* AppDelegate.swift in Sources */,
+				02A147AE1ECA3E22005B8038 /* FirebaseManager.swift in Sources */,
 				021E0AD51EBD835200CD761B /* PlacesController.swift in Sources */,
 				021E0AE91EBD867700CD761B /* Place.swift in Sources */,
+				02A147B11ECA58E5005B8038 /* PlaceCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
