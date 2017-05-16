@@ -14,14 +14,16 @@ enum PlaceType: String {
     case Miscellaneous = "Miscellaneous"
 }
 
-struct Place {
+class Place {
     
     var id: String?
-    var name: String?
-    var latitude: Double?
-    var longitude: Double?
-    var type: PlaceType?
-    var imageSmall: String?
+    private(set) var name: String?
+    private(set) var latitude: Double?
+    private(set) var longitude: Double?
+    private(set) var type: PlaceType?
+    private(set) var description: String?
+    private(set) var imageSmall: String?
+    private(set) var imageBig: String?
     
     init(with dictionary: [String: Any]) {
         name = dictionary["name"] as? String
@@ -45,5 +47,10 @@ struct Place {
                 break
             }
         }
+    }
+    
+    func setDetail(with dictionary: [String: Any]) {
+        description = dictionary["desc"] as? String
+        imageBig = dictionary["imagebig"] as? String
     }
 }

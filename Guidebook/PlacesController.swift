@@ -13,6 +13,7 @@ class PlacesController: UIViewController {
     var firebaseManager: FirebaseManager?
     var places = [Place]()
     let cellId = "PlaceCell"
+    let detailControllerSegueId = "DetailController"
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -30,16 +31,32 @@ class PlacesController: UIViewController {
     
 }
 
+
 // MARK: - firebase manager
 extension PlacesController: FirebaseManagerDelegate {
-    func firebaseManager(fetchedPlaces places: [Place]) {
+    func firebaseManager(fetched places: [Place]) {
         self.places = places
         tableView.reloadData()
     }
+    
+    func firebaseManager(fetched placeDetails: Place) { }
 }
 
 // MARK: - table view
 extension PlacesController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: detailControllerSegueId, sender: places[indexPath.row])
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == detailControllerSegueId,
+            let destination = segue.destination as? DetailController,
+            let selectedPlace = sender as? Place,
+            let firebaseManager = firebaseManager
+            else { return }
+        destination.setProperties(firebaseManager: firebaseManager, place: selectedPlace)
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? PlaceCell else {

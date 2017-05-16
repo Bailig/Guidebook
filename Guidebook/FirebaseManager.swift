@@ -9,7 +9,8 @@
 import Firebase
 
 protocol FirebaseManagerDelegate: class {
-    func firebaseManager(fetchedPlaces places: [Place])
+    func firebaseManager(fetched places: [Place])
+    func firebaseManager(fetched placeWithDetail: Place)
 }
 
 class FirebaseManager {
@@ -17,7 +18,7 @@ class FirebaseManager {
     private var ref = FIRDatabase.database().reference()
     private var places = [Place]()
     
-    weak var delegate: FirebaseManagerDelegate?
+    var delegate: FirebaseManagerDelegate?
     
     func fetchPlaces() {
         ref.child("places").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -25,13 +26,27 @@ class FirebaseManager {
             
             for (placeId, placeData) in places {
                 if let placeData = placeData as? [String: Any] {
-                    var place = Place(with: placeData)
+                    let place = Place(with: placeData)
                     place.id = placeId
                     self.places.append(place)
                 }
             }
             DispatchQueue.main.async {
-                self.delegate?.firebaseManager(fetchedPlaces: self.places)
+                self.delegate?.firebaseManager(fetched: self.places)
+            }
+        })
+    }
+    
+    func fetchPlaceDetails(for place: Place) {
+        guard let placeId = place.id else { return }
+        
+        ref.child("place-detail").child(placeId).observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let placeDetail = snapshot.value as? [String: Any] else { return }
+            
+            place.setDetail(with: placeDetail)
+            
+            DispatchQueue.main.async {
+                self.delegate?.firebaseManager(fetched: place)
             }
         })
     }
