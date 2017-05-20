@@ -11,6 +11,7 @@ import UIKit
 class DetailController: UIViewController {
 
     var firebaseManager: FirebaseManager?
+    var currentController: UIViewController?
     var place: Place? {
         didSet {
             nameLabel.text = place?.name
@@ -21,6 +22,7 @@ class DetailController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var containerView: UIView!
     @IBAction func backButtonPressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
@@ -30,6 +32,20 @@ class DetailController: UIViewController {
     }
     @IBAction func faveButtonPressed(_ sender: UIButton) {
     }
+    @IBAction func navButtonsTapped(_ sender: UIButton) {
+        switch sender.tag {
+        case 1:
+            moveToChildController(withIdentifier: "DescriptionController")
+        case 2:
+            moveToChildController(withIdentifier: "ReviewsController")
+        case 3:
+            moveToChildController(withIdentifier: "WriteReviewController")
+        default:
+            moveToChildController(withIdentifier: "DescriptionController")
+            break
+        }
+    }
+    
     
     
     override func viewDidLoad() {
@@ -37,6 +53,41 @@ class DetailController: UIViewController {
         
     }
     
+    // MARK: - navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        currentController = segue.destination
+    }
+    
+    private func moveToChildController(withIdentifier identifier: String) {
+        let toController = storyboard?.instantiateViewController(withIdentifier: identifier)
+        if let toController = toController, let fromController = currentController {
+            moveAndSizeChildControllers(fromController: fromController, toController: toController)
+        }
+    }
+    
+    private func moveAndSizeChildControllers(fromController: UIViewController, toController: UIViewController) {
+        fromController.willMove(toParentViewController: nil)
+        
+        toController.view.frame = containerView.bounds
+        
+        addChildViewController(toController)
+        containerView.addSubview(toController.view)
+        
+        // animatin
+        toController.view.alpha = 0
+        UIView.animate(withDuration: 0.5, animations: {
+            toController.view.alpha = 1
+            fromController.view.alpha = 0
+        }) { (completed) in
+            fromController.view.removeFromSuperview()
+            fromController.removeFromParentViewController()
+            
+            toController.didMove(toParentViewController: self)
+            self.currentController = toController
+        }
+    }
+    
+    // MARK: - data
     func setProperties(firebaseManager: FirebaseManager, place: Place) {
         self.firebaseManager = firebaseManager
         self.firebaseManager?.delegate = self
