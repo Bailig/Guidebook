@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class DetailController: UIViewController {
 
     var firebaseManager: FirebaseManager?
@@ -16,6 +17,9 @@ class DetailController: UIViewController {
         didSet {
             nameLabel.text = place?.name
             typeLabel.text = place?.type?.rawValue
+            if let descriptionController = currentController as? DescriptionController {
+                descriptionController.setLabel(withText: place?.description)
+            }
         }
     }
     
@@ -60,6 +64,11 @@ class DetailController: UIViewController {
     
     private func moveToChildController(withIdentifier identifier: String) {
         let toController = storyboard?.instantiateViewController(withIdentifier: identifier)
+        
+        if let toController = toController as? ReviewsController, let reviews = place?.reviews {
+            toController.reviews = reviews
+        }
+        
         if let toController = toController, let fromController = currentController {
             moveAndSizeChildControllers(fromController: fromController, toController: toController)
         }
@@ -87,15 +96,15 @@ class DetailController: UIViewController {
         }
     }
     
-    // MARK: - data
+    // MARK: - set properties
     func setProperties(firebaseManager: FirebaseManager, place: Place) {
         self.firebaseManager = firebaseManager
         self.firebaseManager?.delegate = self
-        self.firebaseManager?.fetchPlaceDetails(for: place)
+        self.firebaseManager?.fetchPlaceDetails(forPlace: place)
     }
 }
 
-
+// MARK: - firebase manager
 extension DetailController: FirebaseManagerDelegate {
     
     func firebaseManager(fetched placeWithDetail: Place) {

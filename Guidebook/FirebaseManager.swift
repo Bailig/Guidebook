@@ -37,13 +37,21 @@ class FirebaseManager {
         })
     }
     
-    func fetchPlaceDetails(for place: Place) {
+    func fetchPlaceDetails(forPlace place: Place) {
         guard let placeId = place.id else { return }
         
         ref.child("place-detail").child(placeId).observeSingleEvent(of: .value, with: { (snapshot) in
             guard let placeDetail = snapshot.value as? [String: Any] else { return }
             
-            place.setDetail(with: placeDetail)
+            place.setDetail(withDictionary: placeDetail)
+            
+            if let reviews = placeDetail["reviews"] as? [String: Any] {
+                for (_, reviewData) in reviews {
+                    if let review = reviewData as? [String : Any] {
+                        place.addReview(withDictionary: review)
+                    }
+                }
+            }
             
             DispatchQueue.main.async {
                 self.delegate?.firebaseManager(fetched: place)

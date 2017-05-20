@@ -14,6 +14,7 @@
 		021E0ADC1EBD835200CD761B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 021E0ADB1EBD835200CD761B /* Assets.xcassets */; };
 		021E0ADF1EBD835200CD761B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 021E0ADD1EBD835200CD761B /* LaunchScreen.storyboard */; };
 		021E0AE91EBD867700CD761B /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021E0AE81EBD867700CD761B /* Place.swift */; };
+		0241F3FF1ED0016A00B9CF06 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0241F3FE1ED0016A00B9CF06 /* Review.swift */; };
 		029474F61ECA97A50001507B /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029474F51ECA97A50001507B /* DetailController.swift */; };
 		029474F81ECA9EE60001507B /* DescriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029474F71ECA9EE60001507B /* DescriptionController.swift */; };
 		029474FA1ECA9F1A0001507B /* ReviewsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029474F91ECA9F1A0001507B /* ReviewsController.swift */; };
@@ -34,6 +35,7 @@
 		021E0ADE1EBD835200CD761B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		021E0AE01EBD835200CD761B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		021E0AE81EBD867700CD761B /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		0241F3FE1ED0016A00B9CF06 /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		029474F51ECA97A50001507B /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		029474F71ECA9EE60001507B /* DescriptionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionController.swift; sourceTree = "<group>"; };
 		029474F91ECA9F1A0001507B /* ReviewsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewsController.swift; sourceTree = "<group>"; };
@@ -98,10 +100,10 @@
 			children = (
 				021E0AD41EBD835200CD761B /* PlacesController.swift */,
 				029474F51ECA97A50001507B /* DetailController.swift */,
-				021E0AD61EBD835200CD761B /* SecondViewController.swift */,
 				029474F71ECA9EE60001507B /* DescriptionController.swift */,
 				029474F91ECA9F1A0001507B /* ReviewsController.swift */,
 				029474FB1ECA9F370001507B /* WriteReviewController.swift */,
+				021E0AD61EBD835200CD761B /* SecondViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -110,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				021E0AE81EBD867700CD761B /* Place.swift */,
+				0241F3FE1ED0016A00B9CF06 /* Review.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				029474F61ECA97A50001507B /* DetailController.swift in Sources */,
 				021E0AD31EBD835200CD761B /* AppDelegate.swift in Sources */,
 				02A147AE1ECA3E22005B8038 /* FirebaseManager.swift in Sources */,
+				0241F3FF1ED0016A00B9CF06 /* Review.swift in Sources */,
 				021E0AD51EBD835200CD761B /* PlacesController.swift in Sources */,
 				021E0AE91EBD867700CD761B /* Place.swift in Sources */,
 				029474F81ECA9EE60001507B /* DescriptionController.swift in Sources */,

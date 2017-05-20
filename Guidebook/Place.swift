@@ -24,6 +24,7 @@ class Place {
     private(set) var description: String?
     private(set) var imageSmall: String?
     private(set) var imageBig: String?
+    private(set) var reviews = [Review]()
     
     init(with dictionary: [String: Any]) {
         name = dictionary["name"] as? String
@@ -49,8 +50,15 @@ class Place {
         }
     }
     
-    func setDetail(with dictionary: [String: Any]) {
+    func setDetail(withDictionary dictionary: [String: Any]) {
         description = dictionary["desc"] as? String
         imageBig = dictionary["imagebig"] as? String
+    }
+    
+    func addReview(withDictionary dictionary: [String: Any]) {
+        let userName = dictionary["reviewer"] as? String
+        let text = dictionary["review"] as? String
+        let review = Review(userName: userName, text: text)
+        reviews.append(review)
     }
 }

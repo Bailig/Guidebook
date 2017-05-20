@@ -22,7 +22,6 @@ class PlacesController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-//        tableView.register(PlaceCell.self, forCellReuseIdentifier: cellId)
         
         firebaseManager = FirebaseManager()
         firebaseManager?.delegate = self
@@ -60,7 +59,7 @@ extension PlacesController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? PlaceCell else {
-            print("error: unable to dequeue reusable cell with id \(cellId)")
+            print("error: unable to dequeue reusable cell with id \(cellId) as PlaceCell")
             return UITableViewCell()
         }
         
