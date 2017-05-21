@@ -24,7 +24,21 @@ class Place {
     private(set) var description: String?
     private(set) var imageSmall: String?
     private(set) var imageBig: String?
-    var reviews = [Review]()
+    
+    private var _reviews = [Review]()
+    var reviews: [Review] {
+        set {
+            _reviews = newValue.sorted(by: { (review1, review2) -> Bool in
+                if let timestamp1 = review1.timestamp, let timestamp2 = review2.timestamp {
+                    return timestamp1 > timestamp2
+                }
+                return false
+            })
+        }
+        get {
+            return _reviews
+        }
+    }
     
     init(with dictionary: [String: Any]) {
         name = dictionary["name"] as? String
@@ -58,7 +72,8 @@ class Place {
     func addReview(withDictionary dictionary: [String: Any]) {
         let userName = dictionary["reviewer"] as? String
         let text = dictionary["review"] as? String
-        let review = Review(userName: userName, text: text)
+        let timestamp = dictionary["timestamp"] as? String
+        let review = Review(userName: userName, text: text, timestamp: timestamp)
         reviews.append(review)
     }
 }

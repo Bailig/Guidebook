@@ -10,5 +10,15 @@ struct Review {
     
     private(set) var userName: String?
     private(set) var text: String?
+    private(set) var timestamp: String?
     
+    init(userName: String, text: String) {
+        self.userName = userName
+        self.text = text
+    }
+    init(userName: String?, text: String?, timestamp: String?) {
+        self.userName = userName
+        self.text = text
+        self.timestamp = timestamp
+    }
 }

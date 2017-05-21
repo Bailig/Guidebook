@@ -58,6 +58,11 @@ class DetailController: UIViewController {
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        guard let placeId = place?.id else { return }
+        firebaseManager?.removeObservers(forPlaceId: placeId)
+    }
+    
     // MARK: - navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         currentController = segue.destination
@@ -135,6 +140,7 @@ extension DetailController: FirebaseManagerDelegate {
     func firebaseManager(fetchedPlaces places: [Place]) { }
 }
 
+// MARK: - write review controller
 extension DetailController: WriteReviewControllerDelegate {
     func writeReview(setReview review: Review) {
         guard let placeId = place?.id else { return }

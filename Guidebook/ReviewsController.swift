@@ -10,7 +10,12 @@ import UIKit
 
 class ReviewsController: UIViewController {
 
-    var reviews = [Review]()
+    var reviews = [Review]() {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     let cellId = "ReviewCell"
     
     @IBOutlet weak var tableView: UITableView!

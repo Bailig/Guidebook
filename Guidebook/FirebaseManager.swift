@@ -64,7 +64,7 @@ class FirebaseManager {
     }
     
     func setReview(review: Review, forPlaceId placeId: String) {
-        let reviewDictionary = ["review": review.text, "reviewer": review.userName]
+        let reviewDictionary = ["review": review.text, "reviewer": review.userName, "timestamp": String(describing: Date())]
         ref.child("place-detail").child(placeId).child("reviews").childByAutoId().setValue(reviewDictionary) { (error, ref) in
             if let error = error {
                 print("error: \(error.localizedDescription)")
@@ -73,5 +73,9 @@ class FirebaseManager {
             }
             self.delegate?.firebaseManagerSetReviewSuccess()
         }
+    }
+    
+    func removeObservers(forPlaceId placeId: String) {
+        ref.child("place-detail").child(placeId).removeAllObservers()
     }
 }
