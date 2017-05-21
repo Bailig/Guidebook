@@ -9,8 +9,10 @@
 import Firebase
 
 protocol FirebaseManagerDelegate: class {
-    func firebaseManager(fetched places: [Place])
-    func firebaseManager(fetched placeWithDetail: Place)
+    func firebaseManager(fetchedPlaces places: [Place])
+    func firebaseManager(fetchedPlaceWithDetail placeWithDetail: Place)
+    func firebaseManagerSetReviewError()
+    func firebaseManagerSetReviewSuccess()
 }
 
 class FirebaseManager {
@@ -32,7 +34,7 @@ class FirebaseManager {
                 }
             }
             DispatchQueue.main.async {
-                self.delegate?.firebaseManager(fetched: self.places)
+                self.delegate?.firebaseManager(fetchedPlaces: self.places)
             }
         })
     }
@@ -40,12 +42,13 @@ class FirebaseManager {
     func fetchPlaceDetails(forPlace place: Place) {
         guard let placeId = place.id else { return }
         
-        ref.child("place-detail").child(placeId).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("place-detail").child(placeId).observe(.value, with: { (snapshot) in
             guard let placeDetail = snapshot.value as? [String: Any] else { return }
             
             place.setDetail(withDictionary: placeDetail)
             
             if let reviews = placeDetail["reviews"] as? [String: Any] {
+                place.reviews.removeAll()
                 for (_, reviewData) in reviews {
                     if let review = reviewData as? [String : Any] {
                         place.addReview(withDictionary: review)
@@ -54,9 +57,21 @@ class FirebaseManager {
             }
             
             DispatchQueue.main.async {
-                self.delegate?.firebaseManager(fetched: place)
+                self.delegate?.firebaseManager(fetchedPlaceWithDetail: place)
             }
         })
+        
     }
     
+    func setReview(review: Review, forPlaceId placeId: String) {
+        let reviewDictionary = ["review": review.text, "reviewer": review.userName]
+        ref.child("place-detail").child(placeId).child("reviews").childByAutoId().setValue(reviewDictionary) { (error, ref) in
+            if let error = error {
+                print("error: \(error.localizedDescription)")
+                self.delegate?.firebaseManagerSetReviewError()
+                return
+            }
+            self.delegate?.firebaseManagerSetReviewSuccess()
+        }
+    }
 }

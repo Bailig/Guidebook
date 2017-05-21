@@ -24,7 +24,7 @@ class Place {
     private(set) var description: String?
     private(set) var imageSmall: String?
     private(set) var imageBig: String?
-    private(set) var reviews = [Review]()
+    var reviews = [Review]()
     
     init(with dictionary: [String: Any]) {
         name = dictionary["name"] as? String

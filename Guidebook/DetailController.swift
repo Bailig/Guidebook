@@ -13,6 +13,7 @@ class DetailController: UIViewController {
 
     var firebaseManager: FirebaseManager?
     var currentController: UIViewController?
+    var descriptionController: DescriptionController?
     var place: Place? {
         didSet {
             nameLabel.text = place?.name
@@ -60,13 +61,23 @@ class DetailController: UIViewController {
     // MARK: - navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         currentController = segue.destination
+        descriptionController = segue.destination as? DescriptionController
     }
     
-    private func moveToChildController(withIdentifier identifier: String) {
-        let toController = storyboard?.instantiateViewController(withIdentifier: identifier)
+    func moveToChildController(withIdentifier identifier: String) {
+        
+        var toController = storyboard?.instantiateViewController(withIdentifier: identifier)
+        
+        if identifier == "DescriptionController" {
+            toController = descriptionController
+        }
         
         if let toController = toController as? ReviewsController, let reviews = place?.reviews {
             toController.reviews = reviews
+        }
+        
+        if let toController = toController as? WriteReviewController {
+            toController.delegate = self
         }
         
         if let toController = toController, let fromController = currentController {
@@ -107,9 +118,26 @@ class DetailController: UIViewController {
 // MARK: - firebase manager
 extension DetailController: FirebaseManagerDelegate {
     
-    func firebaseManager(fetched placeWithDetail: Place) {
+    func firebaseManager(fetchedPlaceWithDetail placeWithDetail: Place) {
         place = placeWithDetail
     }
     
-    func firebaseManager(fetched places: [Place]) { }
+    func firebaseManagerSetReviewError() {
+        let alertController = UIAlertController(title: "Error", message: "There was an error saving your review", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func firebaseManagerSetReviewSuccess() {
+        moveToChildController(withIdentifier: "ReviewsController")
+    }
+    func firebaseManager(fetchedPlaces places: [Place]) { }
+}
+
+extension DetailController: WriteReviewControllerDelegate {
+    func writeReview(setReview review: Review) {
+        guard let placeId = place?.id else { return }
+        firebaseManager?.setReview(review: review, forPlaceId: placeId)
+    }
 }

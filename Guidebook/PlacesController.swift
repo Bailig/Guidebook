@@ -33,12 +33,13 @@ class PlacesController: UIViewController {
 
 // MARK: - firebase manager
 extension PlacesController: FirebaseManagerDelegate {
-    func firebaseManager(fetched places: [Place]) {
+    func firebaseManager(fetchedPlaces places: [Place]) {
         self.places = places
         tableView.reloadData()
     }
-    
-    func firebaseManager(fetched placeDetails: Place) { }
+    func firebaseManagerSetReviewSuccess() { }
+    func firebaseManagerSetReviewError() { }
+    func firebaseManager(fetchedPlaceWithDetail placeDetails: Place) { }
 }
 
 // MARK: - table view
